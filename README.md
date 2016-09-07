@@ -1,2 +1,2 @@
 # use-python
-python使用笔记
+在工作中积累的python使用经验
