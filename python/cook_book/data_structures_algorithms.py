@@ -1,6 +1,23 @@
 """
 leemiracle:lov
+collections: 容器数据类型
+    namedtuple()：factory function for creating tuple subclasses with named fields
+    deque：list-like container with fast appends and pops on either end
+    ChainMap：dict-like class for creating a single view of multiple mappings
+    Counter：dict subclass for counting hashable objects
+    OrderedDict:dict subclass that remembers the order entries were added
+    defaultdict:dict subclass that calls a factory function to supply missing values
+    UserDict:wrapper around dictionary objects for easier dict subclassing
+    UserList:wrapper around list objects for easier list subclassing
+    UserString:wrapper around string objects for easier string subclassing
+heapq:堆队列算法,比如优先队列算法
+    which a[k] <= a[2*k+1] and a[k] <= a[2*k+2]
+operator:高效的函数
+    a set of efficient functions corresponding to the intrinsic operators of Python.
+itertools：迭代器
+    Functions creating iterators for efficient looping
 """
+
 # 1.Unpacking a Sequence(序列) into Separate Variables:赋值
 data = ['ACME', 50, 91.1, (2012, 12, 21)]
 name, shares, price, date = data
@@ -123,3 +140,32 @@ def dedupe(items, key=None):
             # TODO 为什么要用yield
             yield item
             seen.add(val)
+# 10.Determining the Most Frequently Occurring Items in a Sequence
+words = [
+    'look', 'into', 'my', 'eyes', 'look', 'into', 'my', 'eyes',
+    'the', 'eyes', 'the', 'eyes', 'the', 'eyes', 'not', 'around', 'the',
+    'eyes', "don't", 'look', 'around', 'the', 'eyes', 'look', 'into',
+    'my', 'eyes', "you're", 'under'
+]
+from collections import Counter
+word_counts = Counter(words)
+
+
+# 11. Sorting a List of Dictionaries by a Common Key Problem
+from operator import itemgetter
+rows = [
+    {'fname':'Brian', 'lname': 'Jones', 'uid': 1003},
+    {'fname':'David', 'lname': 'Beazley', 'uid': 1002},
+    {'fname':'John', 'lname': 'Cleese', 'uid': 1001},
+    {'fname':'Big', 'lname': 'Jones', 'uid': 1004}
+]
+rows_by_fname = sorted(rows, key=itemgetter('fname'))
+
+# 12. Grouping Records Together Based on a Field
+from itertools import groupby
+for date, items in groupby(rows, key=itemgetter('date')):
+    print(date)
+for i in items:
+    print(' ', i)
+
+
