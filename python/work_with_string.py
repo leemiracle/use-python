@@ -1,3 +1,7 @@
+import time
+
+import datetime
+
 
 def test_convert_unicode_ascii():
     # 将编码int转换字符
@@ -14,6 +18,15 @@ def delete_special_character(string):
     :return:
     """
     return ''.join(e for e in string if e.isalnum())
+
+
+def convert_date_to_timestamp(string):
+    """
+    将 日/月/年 转 时间戳
+    :param string:
+    :return:
+    """
+    return time.mktime(datetime.datetime.strptime(string.strip(), "%d/%m/%Y").timetuple())
 
 
 def test_re():
