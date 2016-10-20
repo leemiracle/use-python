@@ -23,3 +23,7 @@ def test_read_csv():
                   b'3sd,zcvw,erw,35\n'
     # skipinitialspace:跳过分隔符后的空格
     pandas_file = pandas.read_csv(BufferedReader(raw=BytesIO(file_values)), dtype=numpy.object, skipinitialspace=True)
+    # 删除 行内值都为 空的数值
+    pandas_file = pandas_file.dropna(how='all')
+    # 删除 列内值都为 空的数值
+    pandas_file = pandas_file.dropna(how='all', axis=1)
