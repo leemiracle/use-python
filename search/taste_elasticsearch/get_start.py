@@ -24,4 +24,42 @@
 
 # 手动执行 elasticsearch
 # /usr/share/elasticsearch/bin/elasticsearch
+# /usr/share/elasticsearch/bin/elasticsearch --cluster.name my_cluster_name --node.name my_node_name
+
+# Exploring Your Cluster
+# the rest api:
+# 1.Check your cluster, node, and index health, status, and statistics
+# Check cluster:curl 'localhost:9200/_cat/health?v'
+
+# 2.Administer your cluster, node, and index data and metadata
+# get a list of nodes in our cluster as follows:curl 'localhost:9200/_cat/nodes?v'
+# list all indices: curl 'localhost:9200/_cat/indices?v'
+
+# 3.Perform CRUD (Create, Read, Update, and Delete) and search operations against your indexes
+# create an index named "customer" and then list all the indexes again:curl -XPUT 'localhost:9200/customer?pretty'
+#                               curl 'localhost:9200/_cat/indices?v'
+# index a simple customer document into the customer index, "external" type, with an ID of 1:
+#               curl -XPUT 'localhost:9200/customer/external/1?pretty' -d '
+#                             {
+#                               "name": "John Doe"
+#                             }'
+# retrieve that document that we just indexed:curl -XGET 'localhost:9200/customer/external/1?pretty'
+# delete the index: curl -XDELETE 'localhost:9200/customer?pretty'
+#                   curl 'localhost:9200/_cat/indices?v'
+# curl -X<REST Verb> <Node>:<Port>/<Index>/<Type>/<ID>
+# modifying data:
+#   indexing/replacing documents( curl -XPUT/XPOST 'localhost:9200/customer/external/1?pretty' -d  'json' )
+#   updating documents: curl -XPOST 'localhost:9200/customer/external/1/_update?pretty' -d '
+#                             {
+#                               "doc": { "name": "Jane Doe" }
+#                             }'
+# deleting document:curl -XDELETE 'localhost:9200/customer/external/2?pretty'
+
+
+# 4.Execute advanced search operations such as paging, sorting, filtering, scripting, aggregations, and many others
+
+
+
+
+
 
