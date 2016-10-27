@@ -38,6 +38,13 @@ def test_re():
     test_re_fail = re_pattern_match.match('！中国')
     assert test_re_fail is None
 
+
+def test_html_text_convert():
+    import html
+    string = '&amp;'
+    string =html.unescape(string)
+
+
 if __name__ == '__main__':
     test_convert_unicode_ascii()
     test_re()
