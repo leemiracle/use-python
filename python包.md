@@ -84,7 +84,9 @@ lxml: Powerful and Pythonic XML processing library combining libxml2/libxslt wit
 
 Genshi: A toolkit for generation of output for the web
 
+ipython: Productive Interactive Computing
 
+notebook: A web-based notebook environment for interactive computing
 
 
 
