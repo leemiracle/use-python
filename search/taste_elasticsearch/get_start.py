@@ -59,7 +59,38 @@
 # 4.Execute advanced search operations such as paging, sorting, filtering, scripting, aggregations, and many others
 
 
+# the search API: GET /bank/_search?q=*&sort=account_number:asc
+# took – time in milliseconds for Elasticsearch to execute the search
+# timed_out – tells us if the search timed out or not
+# _shards – tells us how many shards were searched, as well as a count of the successful/failed searched shards
+# hits – search results
+# hits.total – total number of documents matching our search criteria
+# hits.hits – actual array of search results (defaults to first 10 documents)
+# sort - sort key for results (missing if sorting by score)
+# _score and max_score - ignore these fields for now
 
 
-
-
+# excute searchs:
+# {
+#     "query": {
+#         { "match_all": {} },
+#         "bool": {
+#           "should": [
+#             { "match": { "address": "mill" } },
+#             { "match": { "address": "lane" } }
+#           ]
+#             过滤
+#           "filter": {}
+#         }
+#     }
+#     "size": 0,
+#       "aggs": {
+#         聚合
+#         "group_by_state": {
+#           "terms": {
+#             "field": "state.keyword"
+#           }
+#         }
+#       }
+#   "_source": ["account_number", "balance"]
+# }
