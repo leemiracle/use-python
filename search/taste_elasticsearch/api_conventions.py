@@ -12,5 +12,6 @@
 # date_format
 # time_zone
 
-
+# url-based access control基于url的访问控制
+# config.yml file:[rest.action.multi.allow_explicit_index: false]
 
