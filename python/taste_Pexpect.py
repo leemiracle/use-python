@@ -1,3 +1,5 @@
+# coding=UTF-8
+
 """
 Pexpect: tool for controlling other applications.
 
