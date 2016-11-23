@@ -89,7 +89,10 @@ ipython: Productive Interactive Computing
 notebook: A web-based notebook environment for interactive computing
 
 PyQRCode: 二维码
+
 pypng: 生成png
+
 Pillow： 图片处理
+
 pyBarcode： 条形码
 
