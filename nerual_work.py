@@ -4,8 +4,14 @@ import numpy as np
 import math
 
 
-def sigmoid(u):
+def logistic(u):
     return 1.0 / (1 + math.exp(-u))
+
+
+def softmax(array):
+    result = [math.exp(d) for d in array]
+    summer = sum(result)
+    return [d/summer for d in result]
 
 
 def learn_single_unit():
@@ -20,7 +26,7 @@ def learn_single_unit():
         # the logistic function (a most common kind of sigmoid function),
 
         # predict value
-        y_1 = sigmoid(u)
+        y_1 = logistic(u)
         print(count, u, W, y_1)
         if y_1 == t:
             break
@@ -62,13 +68,15 @@ def learn_multi_layer(alpha):
 
         y_m = np.matmul(h_N, W_n_m)
         y_m = y_m.tolist()[0]
-        y_m = map(sigmoid, y_m)
+        y_m = map(logistic, y_m)
         print y_m
 
         t = [0 for i in range(len(y_m))]
         t[1] = 1
         print "y_m", y_m
-        if t == y_m:
+
+        y_m_verify = [math.floor(d) for d in y_m]
+        if t == y_m_verify:
             break
 
         E_j = []
@@ -103,6 +111,87 @@ def learn_multi_layer(alpha):
         count += 1
         print "count", count
 
+
+def continuous_bag_of_word(alpha):
+    """
+    one word model like multi layer network, but the posterior distribution of words be replaced by softmax function
+    :return:
+    """
+    # TODO complete input not one-hot model
+    X = np.matrix([[0, 1, 0], [1, 0, 0]])
+    W_k_n = np.matrix([
+        [0.5, 0],
+        [0, 0.5],
+        [0, 0]])
+    W_n_m = np.matrix([
+        [-0.5, 0.5, -0.5, -0.5],
+        [-0.5, 0.5, -0.5, -0.5]])
+
+    count = 0
+    while 1:
+        # in -> hidden
+        u_i = np.matrix(np.zeros(W_k_n.shape[1]))
+        for d in X:
+            u_i += np.matmul(d, W_k_n)
+
+        h_N = u_i/float(len(X))
+        print "h_N:", h_N
+
+        # hidden -> output
+        y_m = np.matmul(h_N, W_n_m)
+        y_m = y_m.tolist()[0]
+        y_m = softmax(y_m)
+        print y_m
+
+        t = [0 for i in range(len(y_m))]
+        t[1] = 1
+        print "y_m", y_m
+
+        # predict result: right to stop
+        y_m_verify = [math.floor(d*2) for d in y_m]
+        if t == y_m_verify:
+            break
+
+        # Update equation for hidden→output weights
+        E_j = []
+        for i, y in enumerate(y_m):
+            E_j.append((y - t[i]))
+        print "E_j:", E_j
+
+        W_n_m = W_n_m.tolist()
+        h_N = h_N.tolist()[0]
+        for i, w in enumerate(W_n_m):
+            for j, a in enumerate(w):
+                W_n_m[i][j] = W_n_m[i][j] - alpha * h_N[i] * E_j[j]
+                print W_n_m[i][j]
+        print "W_n_m:", W_n_m
+
+        # Update equation for input→hidden weights
+        E_i = []
+        for i, h in enumerate(h_N):
+            tmp = []
+            for j, E in enumerate(E_j):
+                tmp.append(W_n_m[i][j] * E)
+            E_i.append(sum(tmp))
+        E_i = np.matrix(E_i)
+        print "E_i:", E_i
+        for i, E in enumerate(E_i):
+            W_k_n = W_k_n - np.matmul(E.T, X[i]).T
+        # W_k_n = W_k_n.tolist()
+        # x_k = X.tolist()[0]
+        # for k, w in enumerate(W_k_n):
+        #     for i, a in enumerate(w):
+        #         W_k_n[k][i] = W_k_n[k][i] - alpha * x_k[k] * E_i[i]
+        print "W_k_n:", W_k_n
+        # W_k_n = np.matrix(W_k_n)
+        W_n_m = np.matrix(W_n_m)
+        count += 1
+        print "count", count
+
+
+def skip_gram(alpha):
+    pass
+
 def main():
     alpha = 0.01
     sentence = ["abd", "abc", "acabd"]
@@ -112,8 +201,7 @@ def main():
             vacab[c] += 1
     print(vacab)
     # learn_single_unit()
-    learn_multi_layer(alpha)
-
+    continuous_bag_of_word(alpha)
 
 
 if __name__ == '__main__':
