@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+    <title>Deep Learning Platform - Task</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <script src="/static/js/jquery-3.1.1.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/tpl.min.js"></script>
+    <script src="/static/js/Chart.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            var data = {{ data | tojson | safe }};
+            var max_length = 1;
+            //Get context with jQuery - using jQuery's .get() method.
+            var ctx = $("#myChart").get(0).getContext("2d");
+            var result = [];
+            var chartColors = {
+              'red': 'rgb(255, 99, 132)',
+              'orange': 'rgb(255, 159, 64)',
+              'yellow': 'rgb(255, 205, 86)',
+              'green': 'rgb(75, 192, 192)',
+              'blue': 'rgb(54, 162, 235)',
+              'purple': 'rgb(153, 102, 255)',
+              'grey': 'rgb(231,233,237)'
+            };
+            var cursor_colors = [];
+            for(var i in chartColors){
+                cursor_colors.push(i);
+            };
+            var count = 0;
+            for(var d in data){
+                var label = d;
+                var tmp = data[d];
+                var tmp_data = [];
+                var length = tmp.length;
+                max_length = length > max_length ? length:max_length;
+                for(var i =0; i<tmp.length; i++){
+                    tmp_data.push({x:i, y:tmp[i]});
+                };
+                console.log(count%cursor_colors.length,chartColors[cursor_colors[count%cursor_colors.length]]);
+                result.push({label:label, data:tmp_data,
+                    borderColor: chartColors[cursor_colors[count%cursor_colors.length]]
+                });
+                count++;
+
+            };
+            Chart.defaults.global.elements.line.fill = false;
+            Chart.defaults.global.elements.point.radius= 0.1;
+            var scatterChart = new Chart(ctx, {
+                type: 'scatter',
+                data: {
+                    datasets: result
+                },
+                options: {
+                    scales: {
+                        xAxes: [{
+                            type: 'linear',
+                            position: 'bottom'
+                        }]
+                    }
+                }
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        {% include "/oa.js" %}
+    </script>
+</head>
+
+<body>
+<div class="container-fluid">
+    {% with username=username %}
+    {% include "/header.html" %}
+    {% endwith %}
+</div>
+<div class="container">
+    <div class="row clearfix">
+        <div class="page-header">
+            <h1>Task - Chart
+                <small>任务图表详情</small>
+            </h1>
+        </div>
+    </div>
+    <canvas id="myChart" width="400" height="300"></canvas>
+    <p></p>
+    <p></p>
+</div>
+{% include "/modal.html" %}
+</body>
+</html>
