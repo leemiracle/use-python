@@ -1,0 +1,23 @@
+//使用：dot -Tpng tensorboard_graph.dot -o img/g1.png
+
+//定义节点属性
+digraph g {
+    //==========定义节点关系============
+    a->b;
+    b->c;
+    c->a;
+    c->d->e->f;
+    d->g;
+    e->h;
+    //==========定义节点属性============
+    //定义a节点为长方形, 样式为填充, 填充颜色为#ABACBA
+    a[shape=box,label="Server1\nWebServer",fillcolor="#ABACBA",style=filled];
+    //定义b为5边形, 标签为"bb", 样式为填充, 填充色为red
+    b[shape=polygon,sides=5,label="bb",style=filled,fillcolor=red];
+    //c, 默认为椭圆
+    d[shape=circle]; //园
+    e[shape=triangle]; //三角形
+    f[shape=polygon, sides=4, skew=0.5]; //平行四边形
+    g[shape=polygon, distortion=0.5]; //梯形, 上边长
+    h[shape=polygon, distortion=-.5]; //梯形, 下边长
+}

@@ -1,0 +1,50 @@
+//使用：dot -Tpng tensorboard_graph.dot -o img/g1.png
+
+//定义节点属性
+digraph g {
+    //==========定义节点关系============
+    a->a;
+    a->b;
+    a->c;
+    a->d;
+    a->e;
+    a->f;
+    a->g;
+    a->h;
+    a->i;
+    a->j;
+    a->a1;
+    a->a11;
+    a->a2;
+    a->a21;
+    a->a3;
+    a->a4;
+    a->a41;
+    a->a5;
+    a->a6;
+    a->a61;
+    a->a7;
+    //==========定义节点属性============
+    //定义a节点为长方形, 样式为填充, 填充颜色为#ABACBA
+    a[shape=box,label="tensorboard",style=filled,fillcolor=red];
+    b[shape=box,label="backend"];
+    c[shape=box,label="components"];
+    d[shape=box,label="defs"];
+    e[shape=box,label="demo"];
+    f[shape=box,label="functionaltests"];
+    g[shape=box,label="java"];
+    h[shape=box,label="pip_package"];
+    i[shape=box,label="plugins"];
+    j[shape=box,label="scripts"];
+    a1[shape=circle,label="data_compat"]
+    a11[shape=circle,label="data_compat_test"]
+    a2[shape=circle,label="db"]
+    a21[shape=circle,label="db_test"]
+    a3[shape=circle,label="encode_png_benchmark"]
+    a4[shape=circle,label="loader"]
+    a41[shape=circle,label="loader_test"]
+    a5[shape=circle,label="main"]
+    a6[shape=circle,label="plugin_util"]
+    a61[shape=circle,label="plugin_util_test"]
+    a7[shape=circle,label="version"]
+}
