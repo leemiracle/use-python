@@ -119,13 +119,8 @@ def continuous_bag_of_word(alpha):
     """
     # TODO complete input not one-hot model
     X = np.matrix([[0, 1, 0], [1, 0, 0]])
-    W_k_n = np.matrix([
-        [0.5, 0],
-        [0, 0.5],
-        [0, 0]])
-    W_n_m = np.matrix([
-        [-0.5, 0.5, -0.5, -0.5],
-        [-0.5, 0.5, -0.5, -0.5]])
+    W_k_n = np.matrix(np.random.random((3, 2)))
+    W_n_m = np.matrix(np.random.random((2, 4)))
 
     count = 0
     while 1:
